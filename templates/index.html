@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linear Regression Simulation</title>
+</head>
+<body>
+    <h1>Linear Regression Simulation</h1>
+    <!-- Display error messages if any -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color:red;">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form method="post">
+        <label for="N">Sample size (N):</label>
+        <input type="number" id="N" name="N" value="{{ N }}" min="1" max="10000" step="1"><br><br>
+        <label for="mu">Mean (mu):</label>
+        <input type="number" id="mu" name="mu" step="any" value="{{ mu }}"><br><br>
+        <label for="sigma2">Variance (sigma²):</label>
+        <input type="number" id="sigma2" name="sigma2" step="any" value="{{ sigma2 }}" min="0"><br><br>
+        <label for="S">Number of simulations (S):</label>
+        <input type="number" id="S" name="S" value="{{ S }}" min="1" max="10000" step="1"><br><br>
+        <input type="submit" value="Generate">
+    </form>
+    {% if plot_url %}
+    <h2>Generated Plot</h2>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Scatter plot with regression line">
+    <h2>Histogram of Slopes and Intercepts</h2>
+    <img src="data:image/png;base64,{{ hist_url }}" alt="Histogram of slopes and intercepts">
+    <p>Proportion of slopes more extreme than calculated slope: {{ more_extreme_slope }}</p>
+    <p>Proportion of intercepts more extreme than calculated intercept: {{ more_extreme_intercept }}</p>
+    {% endif %}
+</body>
+</html>
